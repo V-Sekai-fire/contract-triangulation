@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "contract-triangulation: the aspect-ratio obstruction, proved"
+abstract: >
+  A Lean 4 proof, against Mathlib, of the geometric obstruction behind
+  interactor-triangulation's two mesh properties. A triangle's aspect ratio is at
+  least its longest edge over its shortest, so a bound on the ratio is a lower
+  bound on edge length; a boundary that forces two mesh vertices closer than that
+  admits no triangulation meeting the bound. The result fixes the threshold the
+  C++ library validates its input against, so the constant is derived rather than
+  tuned. Part of the multiplayer-fabric hexagonal architecture.
+authors:
+  - family-names: Lee
+    given-names: "K. S. Ernest (iFire)"
+    email: ernest.lee@chibifire.com
+    orcid: "https://orcid.org/0000-0003-4570-1436"
+version: 0.1.0-dev.1
+date-released: "2026-08-18"
+license: MIT
+repository-code: "https://github.com/v-sekai-multiplayer-fabric/contract-triangulation"
+keywords:
+  - lean4
+  - mathlib
+  - formal-verification
+  - mesh-generation
+  - triangulation
+  - computational-geometry
+
+references:
+  - type: software
+    title: "interactor-triangulation"
+    notes: "The library whose properties this proves the obstruction for."
+    repository-code: "https://github.com/fire/interactor-triangulation"
+  - type: software
+    title: "mathlib4"
+    notes: "The mathematical library the proof is written against."
+    repository-code: "https://github.com/leanprover-community/mathlib4"
+  - type: software
+    title: "pmp-library"
+    notes: "Supplies the isotropic remesher whose feature-protection rules make the obstruction bite."
+    repository-code: "https://github.com/pmp-library/pmp-library"
