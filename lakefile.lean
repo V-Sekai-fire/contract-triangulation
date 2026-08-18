@@ -12,3 +12,7 @@ require mathlib from git
 
 @[default_target]
 lean_lib «Triangulation» where
+
+-- Gates the axiom set rather than trusting it. Building this target is the check.
+@[default_target]
+lean_lib «AxiomCheck» where

@@ -1,0 +1,34 @@
+name: lake build
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: lake-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Setup: install the toolchain from lean-toolchain, fetch the Mathlib cache rather than
+      # compiling Mathlib, resolve the dependency graph, and build both default targets.
+      #
+      # `AxiomCheck` is the gate, not a formality. `sorry` elaborates and compiles, so a build
+      # that only checks Triangulation would stay green with the proofs missing. AxiomCheck
+      # fails on any declaration under `Contract.Triangulation` whose axiom set contains
+      # `sorryAx`, and it was shown failing on a deliberate probe before being trusted.
+      - name: setup toolchain + mathlib cache + build + axiom gate
+        uses: leanprover/lean-action@v1
+        with:
+          build-args: "Triangulation AxiomCheck"
+          test: false
+          lint: false
+          use-mathlib-cache: true

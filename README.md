@@ -25,6 +25,11 @@ rather than tuning it.
     lake exe cache get
     lake build
 
+`AxiomCheck` is a build target rather than a note: it fails if any declaration here depends on
+`sorryAx`, because `sorry` elaborates and compiles and would otherwise leave a green build with
+the proof missing. It was shown failing on a deliberate probe before being trusted. CI runs it
+on every push and pull request.
+
 ## What this does not prove
 
 That pmp's remesher achieves the bound when the boundary is well separated. That would mean
