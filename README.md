@@ -1,37 +1,26 @@
 # contract-triangulation
 
-Why a mesher that must keep its boundary cannot also bound its triangle quality, proved in
-Lean 4 against Mathlib.
+A Lean 4 proof, against Mathlib, that a mesher which must keep its boundary cannot also bound its triangle quality.
 
-`interactor-triangulation` asserts two properties of every mesh it returns: every input
-boundary vertex survives, and no triangle's aspect ratio passes a bound. Those are not
-independent. A boundary that comes close to itself forces two mesh vertices close together,
-a triangle with a short edge is a sliver, and collapsing the short edge is exactly what
-boundary preservation forbids. Google FuzzTest found the case: a hexagon whose edge 0-1
-passes within 7e-6 of edge 4-5 while every pair of its vertices is at least 8.9 apart.
+## What it is for
 
-`Triangulation/Sliver.lean` proves the part that fixes the constant.
-
-    lo / hi ≤ aspect          -- a triangle's aspect ratio is at least longest over shortest
-    aspect < R → hi / R < lo  -- so a bound on the ratio is a lower bound on edge length
-
-The second is what the library's input validation is built on: if the boundary forces two
-vertices closer than `maxEdge / R`, no triangulation meeting the bound exists, whatever the
-mesher does. The threshold is derived rather than measured, which is the point of proving it
-rather than tuning it.
+A mesher that promises every input boundary vertex survives, and that no triangle's aspect ratio
+passes a bound, is promising two things that are not independent. A boundary that comes close to
+itself forces two vertices close together, a triangle with a short edge is a sliver, and the only
+fix is to collapse the edge the first promise protects. The proof turns an aspect-ratio bound into
+a lower bound on edge length, which gives input validation a derived threshold rather than a
+tuned one. It proves the obstruction only, not that any remesher meets the bound on
+well-separated input.
 
 ## Build
 
-    lake exe cache get
-    lake build
+```sh
+lake exe cache get
+lake build
+```
 
-`AxiomCheck` is a build target rather than a note: it fails if any declaration here depends on
-`sorryAx`, because `sorry` elaborates and compiles and would otherwise leave a green build with
-the proof missing. It was shown failing on a deliberate probe before being trusted. CI runs it
-on every push and pull request.
+The build fails if any declaration depends on `sorry`.
 
-## What this does not prove
+## Licence
 
-That pmp's remesher achieves the bound when the boundary is well separated. That would mean
-formalising the remesher, and it is not claimed here. What is proved is the obstruction: the
-inputs on which no mesher can succeed, and the number that separates them.
+MIT; see `LICENSE`.
