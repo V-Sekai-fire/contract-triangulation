@@ -6,9 +6,9 @@ package «contract-triangulation» where
 
 -- Pinned by toolchain tag, which is how every Mathlib in this workspace is pinned:
 -- contract-protocol, contract-interest-mgmt, interactor-spatial-oracle and
--- entities-lean-rebac are all on v4.30.0 against the same Lean.
+-- entities-lean-rebac are all on v4.34.1 against the same Lean.
 require mathlib from git
-  "https://github.com/leanprover-community/mathlib4" @ "v4.30.0"
+  "https://github.com/leanprover-community/mathlib4" @ "v4.34.1"
 
 @[default_target]
 lean_lib «Triangulation» where
