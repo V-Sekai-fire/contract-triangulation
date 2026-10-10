@@ -17,7 +17,7 @@ open Lean Elab Command
 run_cmd do
   let env ← getEnv
   let mut offenders : Array Name := #[]
-  let mut checked := 0
+  let mut checked : Nat := 0
   for (n, _) in env.constants.toList do
     if (`Contract.Triangulation).isPrefixOf n && !n.isInternal then
       checked := checked + 1
